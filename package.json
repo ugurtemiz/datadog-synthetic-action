@@ -1,0 +1,27 @@
+{
+  "name": "datadog-synthetic-action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ugurtemiz/datadog-synthetic-action.git"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "datadog"
+  ],
+  "author": "Ugur Temiz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ugurtemiz/datadog-synthetic-action/issues"
+  },
+  "homepage": "https://github.com/ugurtemiz/datadog-synthetic-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.7"
+  }
+}

@@ -1,0 +1,12 @@
+name: 'Datadog Synthetic'
+description: 'Scheduler for Datadog Synthetic'
+inputs:
+  datadog-api-key:
+    description: 'API Key for Datadog'
+    required: true
+outputs:
+  result: # id of output
+    description: 'The Result'
+runs:
+  using: 'node12'
+  main: 'index.js'
