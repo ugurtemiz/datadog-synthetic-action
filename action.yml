@@ -4,11 +4,9 @@ inputs:
   datadog-api-key:
     description: 'API Key for Datadog'
     required: true
-    default: ${{secrets.DATADOG_API_KEY}}
   datadog-application-key:
     description: 'Application Key for Datadog'
-    required: true
-    default: ${{secrets.DATADOG_APPLICATION_KEY}}
+    required: false
 outputs:
   result: # id of output
     description: 'The Result'
