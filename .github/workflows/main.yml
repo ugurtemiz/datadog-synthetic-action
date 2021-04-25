@@ -16,4 +16,4 @@ jobs:
           datadog-api-key: ${{secrets.DATADOG_API_KEY}}
           datadog-application-key: ${{secrets.DATADOG_APPLICATION_KEY}}
           public-ids: "vrz-9c5-a9z,r69-v3v-28q,7k8-gy2-hem,3a2-eqt-3sc"
-          new-status: "paused"
+          new-status: "live"
