@@ -1407,24 +1407,30 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(127);
 const httpm = __nccwpck_require__(840);
 
-function getClient(apiKey) {
-  console.log(`getClient`);
-  return new httpm.HttpClient("dd-http-client", [], {
+function getClient(apiKey, applicationKey) {
+  const header = {
     headers: {
       "DD-API-KEY": apiKey,
       "Content-Type": "application/json",
     },
-  });
+  };
+
+  if (applicationKey) {
+    header.headers["DD-APPLICATION-KEY"] = applicationKey;
+  }
+
+  return new httpm.HttpClient("dd-http-client", [], header);
 }
 
 async function run() {
   try {
     const apiKey = core.getInput("datadog-api-key");
+    const applicationKey = core.getInput("datadog-application-key");
     const apiURL = core.getInput("api-url");
     const publicIDs = core.getInput("public-ids").split(",");
     console.log(`Hello publicIDs ${publicIDs}!`);
 
-    const http = getClient(apiKey);
+    const http = getClient(apiKey, applicationKey);
 
     for (const id of publicIDs) {
       const res = await http.put(
