@@ -33,7 +33,7 @@ async function run () {
 
 			if (
 				res.message.statusCode === undefined
-        || res.message.statusCode >= 400
+				|| res.message.statusCode >= 400
 			)
 				throw new Error(`HTTP request failed: ${ res.message.statusMessage }`)
 

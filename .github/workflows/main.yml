@@ -5,15 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Test Job for Datadog Synthetic
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Hello world action step
-        uses: ./ # Uses an action in the root directory
-        id: hello
+      - name: Action step
+        uses: ./
+        id: test
         with:
           datadog-api-key: ${{secrets.DATADOG_API_KEY}}
           datadog-application-key: ${{secrets.DATADOG_APPLICATION_KEY}}
-          public-ids: "vrz-9c5-a9z,r69-v3v-28q,7k8-gy2-hem,3a2-eqt-3sc"
+          public-ids: "vrz-9c5-a9z,r69-v3v-28q"
           new-status: "live"

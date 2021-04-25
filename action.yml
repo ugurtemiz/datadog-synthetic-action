@@ -1,5 +1,5 @@
 name: 'Datadog Synthetic'
-description: 'Scheduler for Datadog Synthetic'
+description: 'A Simple Github Action for Datadog Synthetic API.'
 inputs:
   api-url:
     description: 'The URL of the API, the default is us'
