@@ -22,13 +22,13 @@
     "url": "https://github.com/ugurtemiz/datadog-synthetic-action/issues"
   },
   "homepage": "https://github.com/ugurtemiz/datadog-synthetic-action#readme",
-  "type": "commonjs",
   "dependencies": {
     "@actions/core": "^1.2.7",
     "@actions/http-client": "^1.0.11"
   },
   "devDependencies": {
     "eslint": "^7.25.0",
+    "eslint-config-recommended": "^4.1.0",
     "eslint-plugin-github": "^4.1.3"
   }
 }

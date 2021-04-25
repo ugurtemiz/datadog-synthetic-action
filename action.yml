@@ -11,12 +11,12 @@ inputs:
     description: 'Application Key for Datadog'
     required: false
   public-ids:
-    description: 'Public IDs of Tests with comma'
+    description: 'The public ID of the Synthetic test to update.'
     required: true
     default: ''
-outputs:
-  result: # id of output
-    description: 'The Result'
+  new-status:
+    description: 'Define whether you want to start (live) or pause (paused) a Synthetic test. Allowed enum values: live,paused'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

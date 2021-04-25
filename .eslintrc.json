@@ -1,6 +1,3 @@
 {
-    "extends": ["plugin:github/recommended"],
-    "parserOptions": {
-        "ecmaVersion": 8
-      }
+  "extends": ["node", "node/style-guide"]
 }

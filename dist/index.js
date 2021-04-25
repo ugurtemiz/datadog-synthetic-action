@@ -399,8 +399,9 @@ exports.toCommandValue = toCommandValue;
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
+var __webpack_unused_export__;
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
+__webpack_unused_export__ = ({ value: true });
 const http = __nccwpck_require__(605);
 const https = __nccwpck_require__(211);
 const pm = __nccwpck_require__(45);
@@ -434,16 +435,16 @@ var HttpCodes;
     HttpCodes[HttpCodes["BadGateway"] = 502] = "BadGateway";
     HttpCodes[HttpCodes["ServiceUnavailable"] = 503] = "ServiceUnavailable";
     HttpCodes[HttpCodes["GatewayTimeout"] = 504] = "GatewayTimeout";
-})(HttpCodes = exports.HttpCodes || (exports.HttpCodes = {}));
+})(HttpCodes = exports.o8 || (exports.o8 = {}));
 var Headers;
 (function (Headers) {
     Headers["Accept"] = "accept";
     Headers["ContentType"] = "content-type";
-})(Headers = exports.Headers || (exports.Headers = {}));
+})(Headers = exports.PM || (exports.PM = {}));
 var MediaTypes;
 (function (MediaTypes) {
     MediaTypes["ApplicationJson"] = "application/json";
-})(MediaTypes = exports.MediaTypes || (exports.MediaTypes = {}));
+})(MediaTypes = exports.Tr || (exports.Tr = {}));
 /**
  * Returns the proxy URL, depending upon the supplied url and proxy environment variables.
  * @param serverUrl  The server URL where the request will be sent. For example, https://api.github.com
@@ -452,7 +453,7 @@ function getProxyUrl(serverUrl) {
     let proxyUrl = pm.getProxyUrl(new URL(serverUrl));
     return proxyUrl ? proxyUrl.href : '';
 }
-exports.getProxyUrl = getProxyUrl;
+__webpack_unused_export__ = getProxyUrl;
 const HttpRedirectCodes = [
     HttpCodes.MovedPermanently,
     HttpCodes.ResourceMoved,
@@ -476,7 +477,7 @@ class HttpClientError extends Error {
         Object.setPrototypeOf(this, HttpClientError.prototype);
     }
 }
-exports.HttpClientError = HttpClientError;
+__webpack_unused_export__ = HttpClientError;
 class HttpClientResponse {
     constructor(message) {
         this.message = message;
@@ -493,12 +494,12 @@ class HttpClientResponse {
         });
     }
 }
-exports.HttpClientResponse = HttpClientResponse;
+__webpack_unused_export__ = HttpClientResponse;
 function isHttps(requestUrl) {
     let parsedUrl = new URL(requestUrl);
     return parsedUrl.protocol === 'https:';
 }
-exports.isHttps = isHttps;
+__webpack_unused_export__ = isHttps;
 class HttpClient {
     constructor(userAgent, handlers, requestOptions) {
         this._ignoreSslError = false;
@@ -935,7 +936,7 @@ class HttpClient {
         });
     }
 }
-exports.HttpClient = HttpClient;
+exports.eN = HttpClient;
 
 
 /***/ }),
@@ -1398,59 +1399,103 @@ module.exports = require("util");;
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__nccwpck_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__nccwpck_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__nccwpck_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__nccwpck_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";/************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
-const core = __nccwpck_require__(127);
-const httpm = __nccwpck_require__(840);
+"use strict";
+__nccwpck_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(127);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_http_client__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(840);
 
-function getClient(apiKey, applicationKey) {
-  const header = {
-    headers: {
-      "DD-API-KEY": apiKey,
-      "Content-Type": "application/json",
-    },
-  };
 
-  if (applicationKey) {
-    header.headers["DD-APPLICATION-KEY"] = applicationKey;
-  }
 
-  return new httpm.HttpClient("dd-http-client", [], header);
+function getClient (apiKey, applicationKey) {
+	const header = {
+		headers: {
+			'DD-API-KEY': apiKey,
+			'Content-Type': 'application/json',
+		},
+	}
+
+	if (applicationKey)
+		header.headers['DD-APPLICATION-KEY'] = applicationKey
+
+	return new _actions_http_client__WEBPACK_IMPORTED_MODULE_1__/* .HttpClient */ .eN('dd-http-client', [], header)
 }
 
-async function run() {
-  try {
-    const apiKey = core.getInput("datadog-api-key");
-    const applicationKey = core.getInput("datadog-application-key");
-    const apiURL = core.getInput("api-url");
-    const publicIDs = core.getInput("public-ids").split(",");
-    console.log(`Hello publicIDs ${publicIDs}!`);
+async function run () {
+	try {
+		const apiKey = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('datadog-api-key')
+		const applicationKey = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('datadog-application-key')
+		const apiURL = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('api-url')
+		const publicIDs = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('public-ids').split(',')
+		const newStatus = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('new-status')
 
-    const http = getClient(apiKey, applicationKey);
+		const http = getClient(apiKey, applicationKey)
 
-    for (const id of publicIDs) {
-      const res = await http.put(
-        `${apiURL}/api/v1/synthetics/tests/${id}/status`,
-        '{"new_status": "paused"}'
-      );
-      console.log(res);
-      if (
-        res.message.statusCode === undefined ||
-        res.message.statusCode >= 400
-      ) {
-        throw new Error(`HTTP request failed: ${res.message.statusMessage}`);
-      }
-    }
-  } catch (error) {
-    core.setFailed(error.message);
-  }
+		for (const id of publicIDs) {
+			const res = await http.put(
+				`${ apiURL }/api/v1/synthetics/tests/${ id }/status`,
+				`{"new_status": "${ newStatus }"}`,
+			)
+
+			if (
+				res.message.statusCode === undefined
+        || res.message.statusCode >= 400
+			)
+				throw new Error(`HTTP request failed: ${ res.message.statusMessage }`)
+
+		}
+	} catch (error) {
+		(0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed)(error.message)
+	}
 }
 
-run();
+run()
 
 })();
 
