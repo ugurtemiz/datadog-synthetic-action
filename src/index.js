@@ -15,19 +15,24 @@ async function run() {
   try {
     const apiKey = core.getInput("datadog-api-key");
     const apiURL = core.getInput("api-url");
-    console.log(`Hello DATADOG_API_KEY ${apiKey}!`);
+    const publicIDs = JSON.parse(core.getInput("public-ids"));
+    console.log(`Hello publicIDs ${core.getInput("public-ids")}!`);
 
     const http = getClient(apiKey);
 
-    const res = await http.get(`${apiURL}/api/v1/validate`);
-    console.log(res);
-    if (res.message.statusCode === undefined || res.message.statusCode >= 400) {
-      throw new Error(`HTTP request failed: ${res.message.statusMessage}`);
-    } else {
-      console.log("res passed");
+    for (const id of publicIDs) {
+      const res = await http.put(
+        `${apiURL}/api/v1/synthetics/tests/${id}/status`,
+        '{"new_status": "paused"}'
+      );
+      console.log(res);
+      if (
+        res.message.statusCode === undefined ||
+        res.message.statusCode >= 400
+      ) {
+        throw new Error(`HTTP request failed: ${res.message.statusMessage}`);
+      }
     }
-
-    core.setOutput("res --> ", JSON.stringify(res));
   } catch (error) {
     core.setFailed(error.message);
   }
