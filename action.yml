@@ -1,5 +1,8 @@
 name: 'Datadog Synthetic'
 description: 'A Simple Github Action for Datadog Synthetic API.'
+branding:
+  icon: play
+  color: purple
 inputs:
   api-url:
     description: 'The URL of the API, the default is us'
