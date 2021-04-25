@@ -1424,10 +1424,7 @@ async function run() {
 
     const http = getClient(apiKey);
 
-    const res = await http.get(
-      `${apiURL}/api/v1/validate`,
-      JSON.stringify(s)
-    )
+    const res = await http.get(`${apiURL}/api/v1/validate`)
 
     if (res.message.statusCode === undefined || res.message.statusCode >= 400) {
       throw new Error(`HTTP request failed: ${res.message.statusMessage}`)
