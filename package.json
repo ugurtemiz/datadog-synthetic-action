@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/ugurtemiz/datadog-synthetic-action#readme",
   "dependencies": {
-    "@actions/core": "^1.2.7"
+    "@actions/core": "^1.2.7",
+    "@actions/http-client": "^1.0.11"
   }
 }

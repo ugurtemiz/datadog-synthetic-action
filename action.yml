@@ -1,6 +1,9 @@
 name: 'Datadog Synthetic'
 description: 'Scheduler for Datadog Synthetic'
 inputs:
+  api-url:
+    description: 'The URL of the API, the default is us'
+    default: 'https://api.datadoghq.com'
   datadog-api-key:
     description: 'API Key for Datadog'
     required: true
