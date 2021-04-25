@@ -1405,29 +1405,32 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 const core = __nccwpck_require__(127);
-const httpm = __nccwpck_require__ (840);
+const httpm = __nccwpck_require__(840);
 
 function getClient(apiKey) {
-  return new httpm.HttpClient('dd-http-client', [], {
+  console.log(`getClient`);
+  return new httpm.HttpClient("dd-http-client", [], {
     headers: {
-      'DD-API-KEY': apiKey,
-      'Content-Type': 'application/json'
-    }
-  })
+      "DD-API-KEY": apiKey,
+      "Content-Type": "application/json",
+    },
+  });
 }
 
 async function run() {
   try {
-    const apiKey = core.getInput('datadog-api-key');
-    const apiURL = core.getInput('api-url');
+    const apiKey = core.getInput("datadog-api-key");
+    const apiURL = core.getInput("api-url");
     console.log(`Hello DATADOG_API_KEY ${apiKey}!`);
 
     const http = getClient(apiKey);
 
-    const res = await http.get(`${apiURL}/api/v1/validate`)
-
+    const res = await http.get(`${apiURL}/api/v1/validate`);
+    console.log(res);
     if (res.message.statusCode === undefined || res.message.statusCode >= 400) {
-      throw new Error(`HTTP request failed: ${res.message.statusMessage}`)
+      throw new Error(`HTTP request failed: ${res.message.statusMessage}`);
+    } else {
+      console.log("res passed");
     }
 
     core.setOutput("res --> ", JSON.stringify(res));

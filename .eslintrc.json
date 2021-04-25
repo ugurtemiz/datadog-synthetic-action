@@ -1,0 +1,6 @@
+{
+    "extends": ["plugin:github/recommended"],
+    "parserOptions": {
+        "ecmaVersion": 8
+      }
+}

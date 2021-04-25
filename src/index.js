@@ -1,27 +1,30 @@
-const core = require('@actions/core');
-const httpm = require ('@actions/http-client');
+const core = require("@actions/core");
+const httpm = require("@actions/http-client");
 
 function getClient(apiKey) {
-  return new httpm.HttpClient('dd-http-client', [], {
+  console.log(`getClient`);
+  return new httpm.HttpClient("dd-http-client", [], {
     headers: {
-      'DD-API-KEY': apiKey,
-      'Content-Type': 'application/json'
-    }
-  })
+      "DD-API-KEY": apiKey,
+      "Content-Type": "application/json",
+    },
+  });
 }
 
 async function run() {
   try {
-    const apiKey = core.getInput('datadog-api-key');
-    const apiURL = core.getInput('api-url');
+    const apiKey = core.getInput("datadog-api-key");
+    const apiURL = core.getInput("api-url");
     console.log(`Hello DATADOG_API_KEY ${apiKey}!`);
 
     const http = getClient(apiKey);
 
-    const res = await http.get(`${apiURL}/api/v1/validate`)
-
+    const res = await http.get(`${apiURL}/api/v1/validate`);
+    console.log(res);
     if (res.message.statusCode === undefined || res.message.statusCode >= 400) {
-      throw new Error(`HTTP request failed: ${res.message.statusMessage}`)
+      throw new Error(`HTTP request failed: ${res.message.statusMessage}`);
+    } else {
+      console.log("res passed");
     }
 
     core.setOutput("res --> ", JSON.stringify(res));
