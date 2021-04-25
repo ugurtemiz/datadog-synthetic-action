@@ -15,9 +15,8 @@ async function run() {
   try {
     const apiKey = core.getInput("datadog-api-key");
     const apiURL = core.getInput("api-url");
-    // const publicIDs = JSON.parse(core.getInput("public-ids"));
-    const publicIDs = core.getInput("public-ids");
-    console.log(`Hello publicIDs ${core.getInput("public-ids")}!`);
+    const publicIDs = core.getInput("public-ids").split(",");
+    console.log(`Hello publicIDs ${publicIDs}!`);
 
     const http = getClient(apiKey);
 

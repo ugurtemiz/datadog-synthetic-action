@@ -11,9 +11,9 @@ inputs:
     description: 'Application Key for Datadog'
     required: false
   public-ids:
-    description: 'Public IDs of Tests'
+    description: 'Public IDs of Tests with comma'
     required: true
-    default: '[]'
+    default: ''
 outputs:
   result: # id of output
     description: 'The Result'

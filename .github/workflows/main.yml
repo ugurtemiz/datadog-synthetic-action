@@ -15,7 +15,7 @@ jobs:
         with:
           datadog-api-key: ${{secrets.DATADOG_API_KEY}}
           datadog-application-key: ${{secrets.DATADOG_APPLICATION_KEY}}
-          public-ids: "['vrz-9c5-a9z']"
+          public-ids: "vrz-9c5-a9z"
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.result }}"
