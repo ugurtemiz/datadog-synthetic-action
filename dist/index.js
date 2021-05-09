@@ -1454,45 +1454,75 @@ __nccwpck_require__.r(__webpack_exports__);
 
 
 function getClient (apiKey, applicationKey) {
-	const header = {
-		headers: {
-			'DD-API-KEY': apiKey,
-			'Content-Type': 'application/json',
-		},
-	}
+  const header = {
+    headers: {
+      'DD-API-KEY': apiKey,
+      'Content-Type': 'application/json',
+    },
+  }
 
-	if (applicationKey)
-		header.headers['DD-APPLICATION-KEY'] = applicationKey
+  if (applicationKey)
+    header.headers['DD-APPLICATION-KEY'] = applicationKey
 
-	return new _actions_http_client__WEBPACK_IMPORTED_MODULE_1__/* .HttpClient */ .eN('dd-http-client', [], header)
+  return new _actions_http_client__WEBPACK_IMPORTED_MODULE_1__/* .HttpClient */ .eN('dd-http-client', [], header)
+}
+
+async function getAllTests (http, apiURL) {
+  const res = await http.get(
+    `${ apiURL }/api/v1/synthetics/tests`,
+  )
+
+  if (
+    res.message.statusCode === undefined
+    || res.message.statusCode >= 400
+  )
+    throw new Error(`HTTP request failed: ${ res.message.statusMessage }`)
+
+  const body = await res.readBody()
+  return JSON.parse(body)
+}
+
+async function setNewStatus (http, apiURL, newStatus, id) {
+  const res = await http.put(
+    `${ apiURL }/api/v1/synthetics/tests/${ id }/status`,
+    `{"new_status": "${ newStatus }"}`,
+  )
+
+  if (
+    res.message.statusCode === undefined
+  || res.message.statusCode >= 400
+  )
+    throw new Error(`HTTP request failed: ${ res.message.statusMessage }`)
 }
 
 async function run () {
-	try {
-		const apiKey = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('datadog-api-key')
-		const applicationKey = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('datadog-application-key')
-		const apiURL = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('api-url')
-		const publicIDs = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('public-ids').split(',')
-		const newStatus = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('new-status')
+  try {
+    const apiKey = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('datadog-api-key')
+    const applicationKey = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('datadog-application-key')
+    const apiURL = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('api-url')
+    const newStatus = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('new-status')
+    const tags = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('tags') ? (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('tags').split(',') : []
+    let publicIDs = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('public-ids') ? (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('public-ids').split(',') : []
 
-		const http = getClient(apiKey, applicationKey)
+    if (!publicIDs.length && !tags.length)
+      throw new Error('At least public-ids or tags should be fileed as parameter.')
 
-		for (const id of publicIDs) {
-			const res = await http.put(
-				`${ apiURL }/api/v1/synthetics/tests/${ id }/status`,
-				`{"new_status": "${ newStatus }"}`,
-			)
+    const http = getClient(apiKey, applicationKey)
 
-			if (
-				res.message.statusCode === undefined
-        || res.message.statusCode >= 400
-			)
-				throw new Error(`HTTP request failed: ${ res.message.statusMessage }`)
+    if (tags.length) {
+      const body = await getAllTests(http, apiURL)
+      const filteredTests = body.tests.filter(test => tags.every(i => test.tags.includes(i)))
+      publicIDs = filteredTests.map(test => test.public_id)
+      console.log(`Public IDs: ${ publicIDs }`)
+    }
 
-		}
-	} catch (error) {
-		(0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed)(error.message)
-	}
+    for (const id of publicIDs)
+      setNewStatus(http, apiURL, newStatus, id)
+
+
+  } catch (error) {
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed)(error.message)
+  }
 }
 
 run()
