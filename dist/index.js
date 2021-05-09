@@ -1469,7 +1469,7 @@ function getClient (apiKey, applicationKey) {
 
 async function getAllTests (http, apiURL) {
   const res = await http.get(
-    `${ apiURL }/api/v1/synthetics/test`,
+    `${ apiURL }/api/v1/synthetics/tests`,
   )
 
   if (
