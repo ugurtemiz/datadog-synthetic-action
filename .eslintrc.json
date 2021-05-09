@@ -1,3 +1,6 @@
 {
-  "extends": ["node", "node/style-guide"]
+  "extends": ["node", "node/style-guide"],
+  "rules": {
+    "indent": ["error", 2]
+  }
 }

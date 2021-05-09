@@ -15,7 +15,11 @@ inputs:
     required: false
   public-ids:
     description: 'The public ID of the Synthetic test to update.'
-    required: true
+    required: false
+    default: ''
+  tags:
+    description: 'List of tags'
+    required: false
     default: ''
   new-status:
     description: 'Define whether you want to start (live) or pause (paused) a Synthetic test. Allowed enum values: live,paused'
