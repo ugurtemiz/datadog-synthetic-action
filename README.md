@@ -21,7 +21,7 @@ With tags:
 
 ```yaml
 - name: Test
-  uses: ugurtemiz/datadog-synthetic-action@v1
+  uses: ugurtemiz/datadog-synthetic-action@v1.1
   with:
     datadog-api-key: ${{secrets.DATADOG_API_KEY}}
     datadog-application-key: ${{secrets.DATADOG_APPLICATION_KEY}}
