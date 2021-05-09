@@ -15,14 +15,42 @@ function getClient (apiKey, applicationKey) {
   return new HttpClient('dd-http-client', [], header)
 }
 
+async function getAllTests (http, apiURL) {
+  const res = await http.get(
+    `${ apiURL }/api/v1/synthetics/test`,
+  )
+
+  if (
+    res.message.statusCode === undefined
+    || res.message.statusCode >= 400
+  )
+    throw new Error(`HTTP request failed: ${ res.message.statusMessage }`)
+
+  const body = await res.readBody()
+  return JSON.parse(body)
+}
+
+async function setNewStatus (http, apiURL, newStatus, id) {
+  const res = await http.put(
+    `${ apiURL }/api/v1/synthetics/tests/${ id }/status`,
+    `{"new_status": "${ newStatus }"}`,
+  )
+
+  if (
+    res.message.statusCode === undefined
+  || res.message.statusCode >= 400
+  )
+    throw new Error(`HTTP request failed: ${ res.message.statusMessage }`)
+}
+
 async function run () {
   try {
     const apiKey = getInput('datadog-api-key')
     const applicationKey = getInput('datadog-application-key')
     const apiURL = getInput('api-url')
-    let publicIDs = getInput('public-ids') ? getInput('public-ids').split(',') : []
+    const newStatus = getInput('new-status')
     const tags = getInput('tags') ? getInput('tags').split(',') : []
-    // const newStatus = getInput('new-status')
+    let publicIDs = getInput('public-ids') ? getInput('public-ids').split(',') : []
 
     if (!publicIDs.length && !tags.length)
       throw new Error('At least public-ids or tags should be fileed as parameter.')
@@ -30,36 +58,16 @@ async function run () {
     const http = getClient(apiKey, applicationKey)
 
     if (tags.length) {
-      const res = await http.get(
-        `${ apiURL }/api/v1/synthetics/tests`,
-      )
-
-      if (
-        res.message.statusCode === undefined
-				|| res.message.statusCode >= 400
-      )
-        throw new Error(`HTTP request failed: ${ res.message.statusMessage }`)
-
-      let body = await res.readBody()
-      body = JSON.parse(body)
+      const body = await getAllTests(http, apiURL)
       const filteredTests = body.tests.filter(test => tags.every(i => test.tags.includes(i)))
       publicIDs = filteredTests.map(test => test.public_id)
-      console.log(publicIDs)
+      console.log(`Public IDs: ${ publicIDs }`)
     }
 
-    // for (const id of publicIDs) {
-    //   const res = await http.put(
-    //     `${ apiURL }/api/v1/synthetics/tests/${ id }/status`,
-    //     `{"new_status": "${ newStatus }"}`,
-    //   )
+    for (const id of publicIDs)
+      setNewStatus(http, apiURL, newStatus, id)
 
-    //   if (
-    //     res.message.statusCode === undefined
-    // 		|| res.message.statusCode >= 400
-    //   )
-    //     throw new Error(`HTTP request failed: ${ res.message.statusMessage }`)
 
-    // }
   } catch (error) {
     setFailed(error.message)
   }
