@@ -1472,7 +1472,7 @@ async function run () {
     const apiKey = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('datadog-api-key')
     const applicationKey = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('datadog-application-key')
     const apiURL = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('api-url')
-    const publicIDs = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('public-ids') ? (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('public-ids').split(',') : []
+    let publicIDs = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('public-ids') ? (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('public-ids').split(',') : []
     const tags = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('tags') ? (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('tags').split(',') : []
     // const newStatus = getInput('new-status')
 
@@ -1495,7 +1495,8 @@ async function run () {
       let body = await res.readBody()
       body = JSON.parse(body)
       const filteredTests = body.tests.filter(test => tags.every(i => test.tags.includes(i)))
-      console.log(filteredTests)
+      publicIDs = filteredTests.map(test => test.public_id)
+      console.log(publicIDs)
     }
 
     // for (const id of publicIDs) {

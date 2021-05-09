@@ -20,7 +20,7 @@ async function run () {
     const apiKey = getInput('datadog-api-key')
     const applicationKey = getInput('datadog-application-key')
     const apiURL = getInput('api-url')
-    const publicIDs = getInput('public-ids') ? getInput('public-ids').split(',') : []
+    let publicIDs = getInput('public-ids') ? getInput('public-ids').split(',') : []
     const tags = getInput('tags') ? getInput('tags').split(',') : []
     // const newStatus = getInput('new-status')
 
@@ -43,7 +43,8 @@ async function run () {
       let body = await res.readBody()
       body = JSON.parse(body)
       const filteredTests = body.tests.filter(test => tags.every(i => test.tags.includes(i)))
-      console.log(filteredTests)
+      publicIDs = filteredTests.map(test => test.public_id)
+      console.log(publicIDs)
     }
 
     // for (const id of publicIDs) {
