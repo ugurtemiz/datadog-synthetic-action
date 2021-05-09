@@ -40,7 +40,8 @@ async function run () {
       )
         throw new Error(`HTTP request failed: ${ res.message.statusMessage }`)
 
-      const body = await res.readBody()
+      let body = await res.readBody()
+      body = JSON.parse(body)
       const filteredTests = body.tests.filter(test => tags.every(i => test.tags.includes(i)))
       console.log(filteredTests)
     }
