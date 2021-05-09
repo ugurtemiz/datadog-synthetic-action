@@ -1493,7 +1493,8 @@ async function run () {
         throw new Error(`HTTP request failed: ${ res.message.statusMessage }`)
 
       const body = await res.readBody()
-      console.log(body)
+      const filteredTests = body.tests.filter(test => tags.every(i => test.tags.includes(i)))
+      console.log(filteredTests)
     }
 
     // for (const id of publicIDs) {
